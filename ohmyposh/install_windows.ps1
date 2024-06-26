@@ -71,9 +71,5 @@ Install-Module -Name Terminal-Icons -Repository PSGallery
 Write-Host "🔧 Adding Terminal-Icons to profile..."
 Import-Module -Name Terminal-Icons
 
-# Reload profile
-Write-Host "🔄 Reloading PowerShell profile..."
-. $PROFILE
-
-Write-Host "✅ Installation and configuration completed successfully!"
+Write-Host "✅ Installation and configuration completed successfully! Please restart your terminal."
 Write-Host "🐬🐬🐬 So long and thanks for all the fish! 🐬🐬🐬"
