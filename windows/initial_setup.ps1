@@ -14,6 +14,11 @@ if (-not (Test-ProcessAdmin)) {
     exit
 }
 
+# Mute all notifications
+Write-Host "Muting all notifications..."
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_TOASTS_ENABLED" -Value 0 -PropertyType DWORD -Force
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_TIP_ENABLED" -Value 0 -PropertyType DWORD -Force
+
 # Disable Windows 11 ads and suggestions
 Write-Host "Disabling Windows 11 ads and suggestions..."
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Value 0 -PropertyType DWORD -Force
