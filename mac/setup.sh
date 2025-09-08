@@ -68,26 +68,5 @@ else
   echo "No Dock.plist found in script directory, skipping Dock update."
 fi
 
-# Karabiner config: Caps Lock -> Delete (backspace)
-echo "Configuring Karabiner"
-mkdir -p ~/.config/karabiner/assets/complex_modifications
-cat > ~/.config/karabiner/assets/complex_modifications/capslock_to_backspace.json <<'EOF'
-{
-  "title": "Caps Lock to Backspace",
-  "rules": [
-    {
-      "description": "Change caps_lock to backspace",
-      "manipulators": [
-        {
-          "from": { "key_code": "caps_lock" },
-          "to":   [ { "key_code": "delete_or_backspace" } ],
-          "type": "basic"
-        }
-      ]
-    }
-  ]
-}
-EOF
-
 echo "Setup complete! Open Karabiner-Elements -> Complex Modifications -> Add Rule to enable 'Caps Lock to Backspace'."
 echo "So long and thanks for all the fish!"
