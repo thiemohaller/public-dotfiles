@@ -35,7 +35,27 @@ brew install --cask \
   tempbox \
   spotify
 
+# Install Oh My Zsh if not present
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  echo "Installing Oh My Zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 
+# Install zsh-autosuggestions
+if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]]; then
+  echo "Installing zsh-autosuggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions \
+    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+fi
+
+# Copy .zshrc from repo
+echo "Installing custom .zshrc..."
+if [[ -f "$SCRIPT_DIR/ohmyzsh/.zshrc" ]]; then
+  cp "$SCRIPT_DIR/ohmyzsh/.zshrc" ~/.zshrc
+  echo ".zshrc installed."
+else
+  echo "No .zshrc found in $SCRIPT_DIR/configs, skipping."
+fi
 
 # Update Dock
 echo "Updating Dock..."
@@ -70,3 +90,4 @@ cat > ~/.config/karabiner/assets/complex_modifications/capslock_to_backspace.jso
 EOF
 
 echo "Setup complete! Open Karabiner-Elements -> Complex Modifications -> Add Rule to enable 'Caps Lock to Backspace'."
+echo "So long and thanks for all the fish!"

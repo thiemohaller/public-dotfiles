@@ -7,9 +7,9 @@ ZSH_THEME="robbyrussell"
 
 # Enable plugins
 plugins=(
-    git
-    zsh-autosuggestions
-    )
+  git
+  zsh-autosuggestions
+)
 
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
