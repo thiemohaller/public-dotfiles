@@ -45,3 +45,5 @@ config.ini
 *.psc1
 *.pssc
 *.psrc
+
+.DS_Store
