@@ -6,6 +6,7 @@ Migrating the profile ensures sidebar customizations, toolbar layout, extensions
 ---
 
 ## 1. Locate Your Profile
+
 Profiles are stored under:
 
 ```bash
@@ -23,6 +24,7 @@ abcdefgh.default
 ---
 
 ## 2. Backup / Export
+
 1. Quit Zen Browser completely.
 2. Copy your profile folder to a safe place:
 

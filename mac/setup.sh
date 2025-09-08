@@ -30,7 +30,6 @@ brew install --cask \
   notion \
   obsidian \
   affinity-photo \
-  private-internet-access \
   raycast \
   tempbox \
   spotify
