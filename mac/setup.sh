@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -euo pipefail
+
+# Determine script directory early for later path references
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Install Homebrew if not installed
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew..."
@@ -8,31 +13,8 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Update brew
-brew update
-
-# CLI tools
-brew install \
-  git
-
-# GUI apps
-brew install --cask \
-  visual-studio-code \
-  iterm2 \
-  rectangle \
-  karabiner-elements \
-  zen \
-  brave-browser \
-  waterfox \
-  unnaturalscrollwheels \
-  alt-tab \
-  stats \
-  notion \
-  obsidian \
-  affinity-photo \
-  raycast \
-  tempbox \
-  spotify
+echo "Running Homebrew package install script..."
+bash "$SCRIPT_DIR/brew_install.sh"
 
 # Install Oh My Zsh if not present
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -47,18 +29,18 @@ if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" 
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 fi
 
-# Copy .zshrc from repo
+# Copy .zshrc from repo (expects it one level up in ohmyzsh directory)
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo "Installing custom .zshrc..."
-if [[ -f "$SCRIPT_DIR/ohmyzsh/.zshrc" ]]; then
-  cp "$SCRIPT_DIR/ohmyzsh/.zshrc" ~/.zshrc
+if [[ -f "$REPO_ROOT/ohmyzsh/.zshrc" ]]; then
+  cp "$REPO_ROOT/ohmyzsh/.zshrc" ~/.zshrc
   echo ".zshrc installed."
 else
-  echo "No .zshrc found in $SCRIPT_DIR/configs, skipping."
+  echo "No .zshrc found in $REPO_ROOT/ohmyzsh, skipping."
 fi
 
 # Update Dock
 echo "Updating Dock..."
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 if [[ -f "$SCRIPT_DIR/Dock.plist" ]]; then
   cp "$SCRIPT_DIR/Dock.plist" ~/Library/Preferences/com.apple.dock.plist
   killall Dock || true
