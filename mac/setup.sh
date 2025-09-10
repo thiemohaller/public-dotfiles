@@ -29,6 +29,13 @@ if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" 
     ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 fi
 
+# Install zsh-syntax-highlighting
+if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]]; then
+  echo "Installing zsh-syntax-highlighting..."
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+fi
+
 # Copy .zshrc from repo (expects it one level up in ohmyzsh directory)
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo "Installing custom .zshrc..."
@@ -37,16 +44,6 @@ if [[ -f "$REPO_ROOT/ohmyzsh/.zshrc" ]]; then
   echo ".zshrc installed."
 else
   echo "No .zshrc found in $REPO_ROOT/ohmyzsh, skipping."
-fi
-
-# Update Dock
-echo "Updating Dock..."
-if [[ -f "$SCRIPT_DIR/Dock.plist" ]]; then
-  cp "$SCRIPT_DIR/Dock.plist" ~/Library/Preferences/com.apple.dock.plist
-  killall Dock || true
-  echo "Dock layout applied."
-else
-  echo "No Dock.plist found in script directory, skipping Dock update."
 fi
 
 echo "Setup complete! Open Karabiner-Elements -> Complex Modifications -> Add Rule to enable 'Caps Lock to Backspace'."
