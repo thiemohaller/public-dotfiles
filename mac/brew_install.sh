@@ -16,7 +16,8 @@ fi
 echo "Installing CLI tools..."
 brew install \
   git \
-  ollama
+  ollama \
+  openjdk 
 
 echo "Installing GUI applications (casks)..."
 casks=(
