@@ -17,16 +17,16 @@ echo "Installing CLI tools..."
 brew install \
   git \
   ollama \
-  openjdk 
+  openjdk
 
 echo "Installing GUI applications (casks)..."
 casks=(
-  visual-studio-code iterm2 rectangle karabiner-elements zen-browser
+  visual-studio-code rectangle karabiner-elements zen-browser
   brave-browser waterfox unnaturalscrollwheels alt-tab stats notion
   obsidian affinity-photo raycast tempbox spotify calibre discord
   zotero audacity bitwarden bambu-studio chatgpt docker ente-auth
   freecad gitkraken jetbrains-toolbox libreoffice lm-studio rustdesk
-  steam vlc yacreader font-fira-code
+  steam vlc yacreader font-fira-code font-maple-mono-nf font-jetbrains-mono-nerd-font nikitabobko/tap/aerospace
 )
 brew install --cask "${casks[@]}"
 
