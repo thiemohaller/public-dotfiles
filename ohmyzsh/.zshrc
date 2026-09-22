@@ -11,6 +11,9 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+# Automatically update Oh My Zsh
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
 source "$ZSH/oh-my-zsh.sh"
 
 # --- Basics ---
@@ -39,6 +42,24 @@ git_prompt_info() {
         || git describe --tags --exact-match 2>/dev/null) || return
   [[ -n $(git status --porcelain 2>/dev/null) ]] && dirty="$ZSH_THEME_GIT_PROMPT_DIRTY" || dirty="$ZSH_THEME_GIT_PROMPT_CLEAN"
   echo "${ZSH_THEME_GIT_PROMPT_PREFIX}${ref}${ZSH_THEME_GIT_PROMPT_SUFFIX}${dirty}"
+}
+
+mise_prompt() {
+  command -v mise >/dev/null || return
+
+  local status toml rust node
+
+  if [[ -f ".mise.toml" || -f "mise.toml" ]]; then
+    toml="󰈙"
+  fi
+
+  rust=$(mise current rust 2>/dev/null | awk '{print $2}')
+  node=$(mise current node 2>/dev/null | awk '{print $2}')
+
+  [[ -n "$rust" ]] && rust="🦀 $rust"
+  [[ -n "$node" ]] && node="⬢ $node"
+
+  echo "${toml} ${rust} ${node}"
 }
 
 CMD_START=0
@@ -85,8 +106,25 @@ add-zsh-hook precmd spotify_prompt
 
 # --- Final Prompts ---
 # Left: arrow + full path + git
-PROMPT='%F{green}➜ %F{blue}%~%f $(git_prompt_info)
+PROMPT='%F{green}➜ %F{blue}%~%f $(git_prompt_info) $(mise_prompt)
 %(?.%F{magenta}.%F{red})❯%f '
 
 # Right: exec time (if any) + Spotify (if playing)
 RPROMPT='${EXEC_TIME_PROMPT}%F{green}${SPOTIFY_PROMPT}%f'
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/thiemo/.lmstudio/bin"
+# End of LM Studio CLI section
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# Flutter SDK
+export PATH=$HOME/Developer/sdk/flutter/bin:$PATH
+
+# Fastfetch only for interactive terminal shells
+if [[ -o interactive ]] && command -v fastfetch >/dev/null 2>&1; then
+  fastfetch --logo-type file --logo '~/.config/fastfetch/logos/*.txt'
+fi
